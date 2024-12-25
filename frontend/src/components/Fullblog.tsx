@@ -3,17 +3,16 @@ import { Avatar } from "./BlogCard";
 import { BlogSkeleton } from "./BlogSkeleton";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { API_key } from "../config";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 export const Fullblog = ({ blog }: { blog: Blog | null }) => {
   const [data, setData] = useState<string>("");
-  async function getSummorize(content: string){
-  
-
-    const genAI = new GoogleGenerativeAI("AIzaSyB23U9bh6NB0wJZl9GEaHFPUokFluLGU0E");
+  async function getSummorize(content: string) {
+    const genAI = new GoogleGenerativeAI(API_key);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    
+
     const prompt = `Summarize the following text: ${content}`;
-    
+
     const result = await model.generateContent(prompt);
     const data = await result.response.text();
     console.log(data);
@@ -59,24 +58,22 @@ export const Fullblog = ({ blog }: { blog: Blog | null }) => {
         </button>
       </Link>
       <button
-        onClick={async() => {
-         const dataa= await getSummorize(blog.content);
-         setData(dataa);
+        onClick={async () => {
+          const dataa = await getSummorize(blog.content);
+          setData(dataa);
         }}
         className="bg-green-800 text-white ml-5 rounded-xl px-3 py-2"
       >
-        Symmorise
+        summarize
       </button>
-      
-      
-     <div>{data}</div>
+      <div className="container mx-auto p-5 bg-gray-100 mt-5 rounded-xl w-3/4 mx-5
+      "
+      >
+        {data}</div>
     </div>
   );
 };
 
 //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
-
-
-
 
 // AIzaSyB23U9bh6NB0wJZl9GEaHFPUokFluLGU0E
