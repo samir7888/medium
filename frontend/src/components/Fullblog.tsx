@@ -66,10 +66,12 @@ export const Fullblog = ({ blog }: { blog: Blog | null }) => {
       >
         summarize
       </button>
-      <div className="container mx-auto p-5 bg-gray-100 mt-5 rounded-xl w-3/4 mx-5
+      <div
+        className="container mx-auto p-5 bg-gray-100 mt-5 rounded-xl w-3/4 mx-5
       "
       >
-        {data}</div>
+        {data}
+      </div>
     </div>
   );
 };
