@@ -1,22 +1,35 @@
-
 import { Blog } from "../hooks";
 import { Avatar } from "./BlogCard";
 import { BlogSkeleton } from "./BlogSkeleton";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 export const Fullblog = ({ blog }: { blog: Blog | null }) => {
+  const [data, setData] = useState<string>("");
+  async function getSummorize(content: string){
+  
+
+    const genAI = new GoogleGenerativeAI("AIzaSyB23U9bh6NB0wJZl9GEaHFPUokFluLGU0E");
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    
+    const prompt = `Summarize the following text: ${content}`;
+    
+    const result = await model.generateContent(prompt);
+    const data = await result.response.text();
+    console.log(data);
+    return <div>{data}</div>;
+  }
   if (!blog) {
     return (
       <div>
-        
         <div className="flex justify-center pt-12">
-         <BlogSkeleton />
+          <BlogSkeleton />
         </div>
       </div>
     );
   }
   return (
     <div className="">
-     
       <div className="flex justify-center ">
         <div className="grid grid-cols-12 px-10 w-full pt-12 max-w-screen-xl ">
           <div className="col-span-8 font-extrabold">
@@ -41,8 +54,29 @@ export const Fullblog = ({ blog }: { blog: Blog | null }) => {
         </div>
       </div>
       <Link to={`/blog/update/${blog.id}`}>
-     <button   className="bg-blue-800 text-white ml-5 rounded-xl px-3 py-2">update</button></Link>
+        <button className="bg-blue-800 text-white ml-5 rounded-xl px-3 py-2">
+          update
+        </button>
+      </Link>
+      <button
+        onClick={async() => {
+         const dataa= await getSummorize(blog.content);
+         setData(dataa);
+        }}
+        className="bg-green-800 text-white ml-5 rounded-xl px-3 py-2"
+      >
+        Symmorise
+      </button>
+      
+      
+     <div>{data}</div>
     </div>
   );
 };
 
+//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
+
+
+
+
+// AIzaSyB23U9bh6NB0wJZl9GEaHFPUokFluLGU0E
