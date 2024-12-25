@@ -76,6 +76,3 @@ export const Fullblog = ({ blog }: { blog: Blog | null }) => {
   );
 };
 
-//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
-
-// AIzaSyB23U9bh6NB0wJZl9GEaHFPUokFluLGU0E
