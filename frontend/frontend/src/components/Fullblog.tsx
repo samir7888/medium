@@ -77,3 +77,7 @@ export const Fullblog = ({ blog }: { blog: Blog | null }) => {
     </div>
   );
 };
+<<<<<<< HEAD:frontend/src/components/Fullblog.tsx
+
+=======
+>>>>>>> 7fd2802 (fixed):src/components/Fullblog.tsx
