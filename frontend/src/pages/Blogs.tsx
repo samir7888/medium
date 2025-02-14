@@ -1,11 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import Appbar from "../components/Appbar";
 import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useBlogs } from "../hooks";
 
 export const Blogs = () => {
+  const navigate = useNavigate();
   const { loading, blogs } = useBlogs();
-console.log(blogs)
+  if (!localStorage.getItem("token")) {
+    navigate('/signin')
+  }
   return (
     <div className="flex justify-center flex-col items-center">
       <Appbar />
