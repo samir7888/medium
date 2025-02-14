@@ -1,2 +1,19 @@
 node_modules
+<<<<<<< HEAD
 .env
+=======
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+>>>>>>> 1c2976a (fixed)
