@@ -3,12 +3,14 @@ import { Avatar } from "./BlogCard";
 import { BlogSkeleton } from "./BlogSkeleton";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { API_key } from "../config";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 export const Fullblog = ({ blog }: { blog: Blog | null }) => {
   const [data, setData] = useState<string>("");
-  async function getSummorize(content: string) {
-    const genAI = new GoogleGenerativeAI(API_key);
+  async function getSummorize(content: string): Promise<string> {
+    if (!import.meta.env.VITE_API_KEY) {
+      throw new Error("VITE_API_KEY is not defined");
+    }
+    const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `Summarize the following text: ${content}`;
@@ -16,7 +18,7 @@ export const Fullblog = ({ blog }: { blog: Blog | null }) => {
     const result = await model.generateContent(prompt);
     const data = await result.response.text();
     console.log(data);
-    return <div>{data}</div>;
+    return data;
   }
   if (!blog) {
     return (
@@ -59,15 +61,15 @@ export const Fullblog = ({ blog }: { blog: Blog | null }) => {
       </Link>
       <button
         onClick={async () => {
-          const dataa = await getSummorize(blog.content);
-          setData(dataa);
+          const blogData = await getSummorize(blog.content);
+          setData(blogData);
         }}
         className="bg-green-800 text-white ml-5 rounded-xl px-3 py-2"
       >
         summarize
       </button>
       <div
-        className="container mx-auto p-5 bg-gray-100 mt-5 rounded-xl w-3/4 mx-5
+        className="container mx-auto p-5 bg-gray-100 mt-5 rounded-xl w-3/4
       "
       >
         {data}
@@ -75,4 +77,3 @@ export const Fullblog = ({ blog }: { blog: Blog | null }) => {
     </div>
   );
 };
-

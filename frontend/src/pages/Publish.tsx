@@ -2,7 +2,7 @@ import { useState } from "react";
 import Appbar from "../components/Appbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
+
 import { toast } from "react-toastify";
 
 export const Publish = () => {
@@ -38,7 +38,7 @@ export const Publish = () => {
           onClick={async () => {
             try {
               const response = await axios.post(
-                `${BACKEND_URL}/api/v1/blog`,
+                `${import.meta.env.VITE_BACKEND_URL}/api/v1/blog`,
                 { title, content },
                 {
                   headers: {

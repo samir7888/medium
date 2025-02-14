@@ -3,9 +3,9 @@ import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { BACKEND_URL } from "../config";
-import {  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
   const navigate = useNavigate();
@@ -18,22 +18,26 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
 
   async function sendRequest() {
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/${
+          type === "signup" ? "signup" : "signin"
+        }`,
+        postInputs
+      );
       const jwt = response.data.jwt;
-      console.log(jwt)
+      console.log(jwt);
       localStorage.setItem("token", jwt);
       navigate("/");
-      toast.success("Login successfully")
+      toast.success("Login successfully");
     } catch (error) {
-      toast.error("Input is incorrect")
-      console.log(error)
+      toast.error("Input is incorrect");
+      console.log(error);
     }
   }
 
   return (
     <div className=" h-screen flex justify-center flex-col">
       <div className="flex justify-center flex-col items-center ">
-        
         <div className="text-3xl font-bold">Create an account</div>
         <div className="text-slate-400 ">
           {type === "signin"
@@ -47,14 +51,16 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
           </Link>
 
           <div className="mt-10 ">
-            {type === "signup" ?   <LabelledInput
-              label="Name"
-              placeholder="Enter your name"
-              onChange={(e) => {
-                setPostInputs({ ...postInputs, name: e.target.value });
-              }}
-            /> : null }
-          
+            {type === "signup" ? (
+              <LabelledInput
+                label="Name"
+                placeholder="Enter your name"
+                onChange={(e) => {
+                  setPostInputs({ ...postInputs, name: e.target.value });
+                }}
+              />
+            ) : null}
+
             <LabelledInput
               label="Email"
               placeholder="Enter your email"

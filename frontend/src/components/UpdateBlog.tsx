@@ -1,7 +1,6 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../config";
 
 interface Blog {
   id: string;
@@ -23,7 +22,7 @@ export const UpdateBlog: React.FC = () => {
     const fetchBlog = async () => {
       try {
         const response = await axios.get<Blog>(
-          `${BACKEND_URL}/api/v1/blog/${id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/${id}`,
           {
             headers: {
               Authorization: localStorage.getItem("token") || "", // JWT token
@@ -55,7 +54,7 @@ export const UpdateBlog: React.FC = () => {
       });
 
       const response = await axios.put(
-        `${BACKEND_URL}/api/v1/blog/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/${id}`,
         {
           title,
           content,
@@ -70,6 +69,7 @@ export const UpdateBlog: React.FC = () => {
       alert(response.data.msg); // Show success message
       navigate(`/blog/${id}`); // Redirect back to the blog details page
     } catch (err) {
+      console.log(err);
       setError("you cannot update other blog");
     } finally {
       setLoading(false);

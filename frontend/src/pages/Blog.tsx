@@ -16,7 +16,7 @@ export const Blog = () => {
       {loading && <BlogSkeleton />}
       <div>
       
-      <Fullblog blog={blog} />
+      <Fullblog blog={blog || null} />
       </div>
     </div>
   )
